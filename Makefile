@@ -4,7 +4,9 @@ UTILS = utils.o
 BUILD_DIRECTORY= build
 
 clean:
-	rmdir ./algoritmo_uno/$(BUILD_DIRECTORY)
+	rm *.exe
+	rm *.out
+			
 
 # Compilar Parte Uno
 cpu: $(UTILS)
@@ -45,4 +47,4 @@ ept: cpt
 $(UTILS):
 	gcc $(CFLAGS) -c $(INCLUDE_FLAGS) ./utils/src/utils.c 
 
-.PHONY: cpu epu epuw cpd epd epdw cpt ept eptw
+.PHONY: cpu epu epuw cpd epd epdw cpt ept eptw $(UTILS)
