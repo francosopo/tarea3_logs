@@ -7,9 +7,8 @@ int find_median_alg3(Mediana *med){
 int main(int argc, char *argv[]){
     int medianSize = 30;
     Mediana *med = newMedian(medianSize);
-    for(int i = 0; i < medianSize; i++){
-        (med->arr)[i] = i;
-    }
-    printf("%i\n", find_median_alg3(med));
+    int median = find_median_alg3(med);
+    test("dummy_test_2", 3, median);
+    destroyMedian(med);
     destroyMedian(med);
 }
