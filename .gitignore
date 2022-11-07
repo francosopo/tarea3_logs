@@ -1,5 +1,6 @@
 *.exe
 *.out
+*.o
 */build/parte_uno.exe
 */build/parte_dos.exe
 */build/parte_tres.exe
