@@ -28,5 +28,5 @@ void test(char *name, int expected, int got){
 }
 
 void holi(){
-    printf("\nHoli");
+    printf("\nHoli\n");
 }
