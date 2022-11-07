@@ -10,5 +10,5 @@ int main(int argc, char *argv[]){
     int median = find_median_alg3(med);
     test("dummy_test_3", 3, median);
     destroyMedian(med);
-    destroyMedian(med);
+    holi();
 }

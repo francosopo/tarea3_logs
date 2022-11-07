@@ -18,4 +18,5 @@ void destroyMedian(Mediana *med);
 
 // test
 void test(char *name, int expected, int got);
+void holi();
 
