@@ -1,6 +1,6 @@
 #include <alg1.h>
 
-int find_median(int *a){
+int find_median_alg1(Mediana *med){
     return 0;
 }
 
@@ -10,6 +10,6 @@ int main(int argc, char *argv[]){
     for(int i = 0; i < medianSize; i++){
         (med->arr)[i] = i;
     }
-    printf("%i\n", find_median(med->arr));
+    printf("%i\n", find_median_alg1(med));
     destroyMedian(med);
 }
