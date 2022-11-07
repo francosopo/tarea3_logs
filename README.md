@@ -1,24 +1,7 @@
 # Compilar
+Las instrucciones para compilar necesitan que se haya creado un directorio /build/ en cada carpeta correspondiente a cada algoritmo
 
-Para compilar cada algoritmo se debe crear un directorio /build/ dentro de cada carpeta de los algoritmos, esto para que el Makefile funcione bien. 
-
-Cada instrucción del Makefile toma en cuenta las iniciales de lo que se quiere hacer.
-
-Compilar Parte Uno: cpu
-```sh
-make cpu #Compila la parte uno correspondiente al algoritmo uno
-```
-
-Compilar Parte Dos: cpd
-```sh
-make cpd #Compila la parte dos correspondiente al algoritmo dos
-```
-
-Compilar Parte Tres: cpt
-```sh
-make cpt #Compila la parte tres correspondiente al algoritmo tres
-```
-
+A continuación se ilustran las instrucciones para compilar cada algoritmo
 # Ejecutar
 
 Para ejecutar los algoritmos se toma en cuenta las iniciales de cada acción
