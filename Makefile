@@ -1,6 +1,10 @@
 CFLAGS= -Wall -pedantic -std=c99 -g
 INCLUDE_FLAGS = -I ./utils/include
 UTILS = utils.o
+BUILD_DIRECTORY= build
+
+clean:
+	rmdir ./algoritmo_uno/$(BUILD_DIRECTORY)
 
 parte_uno: $(UTILS)
 	gcc $(CFLAGS) -o ./algoritmo_uno/build/parte_uno -I ./algoritmo_uno/include $(INCLUDE_FLAGS) ./algoritmo_uno/src/alg1.c $(UTILS)
