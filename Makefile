@@ -1,13 +1,17 @@
-parte_uno: utils.o
-	gcc -Wall -pedantic -std=c99 -g -o ./algoritmo_uno/build/parte_uno -I ./algoritmo_uno/include -I ./utils/include ./algoritmo_uno/src/alg1.c utils.o 
+CFLAGS= -Wall -pedantic -std=c99 -g
+INCLUDE_FLAGS = -I ./utils/include
+UTILS = utils.o
 
-parte_dos: utils.o
-	gcc -Wall -pedantic -std=c99 -g -o ./algoritmo_dos/build/parte_dos -I ./algoritmo_dos/include -I ./utils/include ./algoritmo_dos/src/alg2.c utils.o
+parte_uno: $(UTILS)
+	gcc $(CFLAGS) -o ./algoritmo_uno/build/parte_uno -I ./algoritmo_uno/include $(INCLUDE_FLAGS) ./algoritmo_uno/src/alg1.c $(UTILS)
 
-parte_tres: utils.o
-	gcc -Wall -pedantic -std=c99 -g -o ./algoritmo_tres/build/parte_tres -I ./algoritmo_tres/include -I ./utils/include ./algoritmo_tres/src/alg3.c utils.o
+parte_dos: $(UTILS)
+	gcc $(CFLAGS) -o ./algoritmo_dos/build/parte_dos -I ./algoritmo_dos/include $(INCLUDE_FLAGS) ./algoritmo_dos/src/alg2.c $(UTILS)
 
-utils.o:
-	gcc -Wall -pedantic -std=c99 -c -I ./utils/include ./utils/src/utils.c
+parte_tres: $(UTILS)
+	gcc $(CFLAGS) -o ./algoritmo_tres/build/parte_tres -I ./algoritmo_tres/include  $(INCLUDE_FLAGS) ./algoritmo_tres/src/alg3.c $(UTILS)
+
+$(UTILS):
+	gcc $(CFLAGS) -c $(INCLUDE_FLAGS) ./utils/src/utils.c
 
 .PHONY: parte_uno parte_dos parte_tres
