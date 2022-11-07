@@ -16,4 +16,6 @@ typedef double (*tiempo_alg)();
 Mediana *newMedian(int array_size);
 void destroyMedian(Mediana *med);
 
+// test
+void test(char *name, int expected, int got);
 

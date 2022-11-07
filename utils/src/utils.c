@@ -21,3 +21,8 @@ void destroyMedian(Mediana *med){
     free(med->arr);
     free(med);
 }
+
+void test(char *name, int expected, int got){
+    if(expected != got) fprintf(stderr, "\nTest %s: Expected %i, got %i",name, expected, got);
+    else printf("\nTest %s pasado", name);
+}
