@@ -1,0 +1,9 @@
+*.exe
+*.out
+*/build/parte_uno.exe
+*/build/parte_dos.exe
+*/build/parte_tres.exe
+
+*/build/parte_uno
+*/build/parte_dos
+*/build/parte_tres
