@@ -10,7 +10,7 @@ cpuw: $(UTILS)
 	gcc $(CFLAGS) -o ./algoritmo_uno/$(BUILD_DIRECTORY)/parte_uno -I ./algoritmo_uno/include $(INCLUDE_FLAGS) ./algoritmo_uno/src/alg1.c $(UTILS)
 
 # Compilar Parte Uno Linux
-cpu:
+cpu: $(UTILS)
 	-mkdir ./algoritmo_uno/$(BUILD_DIRECTORY)
 	gcc $(CFLAGS) -o ./algoritmo_uno/$(BUILD_DIRECTORY)/parte_uno -I ./algoritmo_uno/include $(INCLUDE_FLAGS) ./algoritmo_uno/src/alg1.c $(UTILS)
 # Ejecutar Parte Uno Windows
@@ -61,5 +61,5 @@ $(UTILS):
 
 clean:
 	rm -f *.o
-	rm -rf */build/*
+	rm -rf */build
 .PHONY: cpuw cpu epu epuw cpdw cpd epd epdw cpt cptw ept eptw $(UTILS) clean_w
