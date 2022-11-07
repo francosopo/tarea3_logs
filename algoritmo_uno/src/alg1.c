@@ -1,7 +1,7 @@
 #include <alg1.h>
 
 int find_median_alg1(Mediana *med){
-    return 0;
+    return 1;
 }
 
 int main(int argc, char *argv[]){
