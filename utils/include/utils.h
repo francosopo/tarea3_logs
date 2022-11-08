@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 /**
  * Estructura Array
@@ -147,6 +148,15 @@ void testSetGetToMedian(void);
  * @param got: Lo que se obtuvo
 */
 void test(char *name, int expected, int got);
+
+/**
+ * testAssertTrue
+ * 
+ * Prueba que el valor sea diferente de cero
+ * 
+ * @param value
+*/
+void testAssertTrue(int value);
 
 // Función dummy
 void holi();

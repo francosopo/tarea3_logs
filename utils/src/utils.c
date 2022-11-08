@@ -86,6 +86,11 @@ void test(char *name, int expected, int got){
     else printf("\nTest %s pasado", name);
 }
 
+void testAssertTrue(int value){
+    if (value == 0) fprintf(stderr, "Expected != 0, got %i", value);
+    else printf("Test Assert True pasado\n");
+}
+
 void holi(){
     printf("\nHoli\n");
 }
