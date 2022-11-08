@@ -92,3 +92,13 @@ Depurar Parte Tres linux
 ```sh
 make dpt
 ```
+
+# Desarrollo
+
+Cada algoritmo tiene su header y su fuente. El header está en el directorio /include/ y el fuente está en el directorio /src/ de cada algoritmo.
+
+Para desarrollar cada algoritmo, se debe trabajar en cada carpeta asociada a cada uno, poniendo en el header las estructuras y las firmas de las funciones que se quieren implementar. Luego, en el fuente se deben implementar las funciones declaradas en el header.
+
+Los tests se deben hacer en el main de cada algoritmo.
+
+Si se tiene una función que puede servir para otros algoritmos, se debe avisar a los demás compañeros e incluir su encabezado en el header de utils (utils/include/) e implementar la función en el fuente de utils que está en utils/src
