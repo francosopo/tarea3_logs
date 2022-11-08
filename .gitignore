@@ -10,3 +10,5 @@
 */build/parte_tres
 
 .vscode/
+
+*valgrind.log
