@@ -1,7 +1,5 @@
 # Compilar
 
-Para compilar cada algoritmo se debe crear un directorio /build/ dentro de cada carpeta de los algoritmos, esto para que el Makefile funcione bien. 
-
 Cada instrucción del Makefile toma en cuenta las iniciales de lo que se quiere hacer.
 
 Compilar Parte Uno Windows: cpuw
