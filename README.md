@@ -1,7 +1,39 @@
 # Compilar
-Las instrucciones para compilar necesitan que se haya creado un directorio /build/ en cada carpeta correspondiente a cada algoritmo
 
-A continuación se ilustran las instrucciones para compilar cada algoritmo
+Para compilar cada algoritmo se debe crear un directorio /build/ dentro de cada carpeta de los algoritmos, esto para que el Makefile funcione bien. 
+
+Cada instrucción del Makefile toma en cuenta las iniciales de lo que se quiere hacer.
+
+Compilar Parte Uno Windows: cpuw
+```sh
+make cpuw #Compila la parte uno  en windows correspondiente al algoritmo uno
+```
+
+Compilar Parte Uno linux: cpu
+```sh
+make cpu #Compila la parte uno en linux correspondiente al algoritmo uno
+```
+
+Compilar Parte Dos Windows: cpdw
+```sh
+make cpdw #Compila la parte dos en windows correspondiente al algoritmo dos
+```
+
+Compilar Parte Dos Linux: cpd
+```sh
+make cpd #Compila la parte dos en linux correspondiente al algoritmo dos
+```
+
+Compilar Parte Tres Windows: cptw
+```sh
+make cptw #Compila la parte tres en windows correspondiente al algoritmo tres
+```
+
+Compilar Parte Tres Linux: cpt
+```sh
+make cpt #Compila la parte tres en linux correspondiente al algoritmo tres
+```
+
 # Ejecutar
 
 Para ejecutar los algoritmos se toma en cuenta las iniciales de cada acción
