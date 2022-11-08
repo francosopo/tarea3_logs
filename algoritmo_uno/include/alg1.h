@@ -14,6 +14,11 @@
 int find_median_alg1(Mediana *m);
 
 /**
+ * Test de find_median
+*/
+void test_find_median_alg1(void);
+
+/**
  * lesser_elements
  * 
  * Parte la @param med con respecto a un pivot indicado
@@ -23,7 +28,12 @@ int find_median_alg1(Mediana *m);
  * @param med: Estructura mediana
  * @param index_pivot: El índice del pivot
 */
-int *lesser_elements(Mediana *med, int index_pivot);
+Array *lesser_elements(Mediana *med, int index_pivot);
+
+/**
+ * Test de lesser elements
+*/
+void test_lesser_elements(void);
 
 /**
  * greater_elements
@@ -35,7 +45,12 @@ int *lesser_elements(Mediana *med, int index_pivot);
  * @param med: Estructura mediana
  * @param index_pivot: El índice del pivot
 */
-int *greater_elements(Mediana *med,int index_pivot);
+Array *greater_elements(Mediana *med, int index_pivot);
+
+/**
+ * Test de greater_elements
+*/
+void test_greater_elements(void);
 
 /**
  * cut_b
