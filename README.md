@@ -58,3 +58,39 @@ make ept # Ejecuta la parte tres en linux, correspondiente al algoritmo tres
 
 make eptw # Ejecuta la parte tres en windows, correspondiente al algoritmo tres
 ```
+
+# Depurar
+
+Para depurar algún binario, se debe escribir el comando de make apropiado para cada acción. Se debe ejecutar los comandos para compilar previamente respecto al sistema en el que se encuentran
+
+Los comandos están escritos tomando en cuenta las iniciales de cada acción.
+
+Depurar Parte Uno Windows
+```sh
+make dpuw
+```
+
+Depurar Parte Uno linux
+```sh
+make dpu
+```
+
+Depurar Parte Dos Windows
+```sh
+make dpdw
+```
+
+Depurar Parte Dos linux
+```sh
+make dpd
+```
+
+Depurar Parte Tres Windows
+```sh
+make dptw
+```
+
+Depurar Parte Tres linux
+```sh
+make dpt
+```

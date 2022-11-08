@@ -59,6 +59,30 @@ ept:
 $(UTILS):
 	gcc $(CFLAGS) -c $(INCLUDE_FLAGS) ./utils/src/utils.c 
 
+# Debuggear Parte Uno Windows
+dpuw:
+	gdb .\algoritmo_uno\build\parte_uno.exe
+
+# Debuggear Parte Uno linux
+dpu:
+	gdb ./algoritmo_uno/build/parte_uno
+
+# Debuggear Parte Dos Windows
+dpdw:
+	gdb .\algoritmo_dos\build\parte_dos.exe
+
+# Debuggear Parte Dos linux
+dpd:
+	gdb ./algoritmo_dos/build/parte_dos
+
+# Debuggear Parte Tres Windows
+dptw:
+	gdb .\algoritmo_tres\build\parte_tres.exe
+
+# Debuggear Parte Uno linux
+dpt:
+	gdb ./algoritmo_tres/build/parte_tres
+
 clean:
 	rm -f *.o
 	rm -rf */build
