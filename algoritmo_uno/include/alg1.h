@@ -18,39 +18,26 @@ int find_median_alg1(Mediana *m);
 */
 void test_find_median_alg1(void);
 
-/**
- * lesser_elements
- * 
- * Parte la @param med con respecto a un pivot indicado
- * en el @param index_pivot, entregando un arreglo de int's 
- * alocado en el heap con los elementos menores que el pivot
- * 
- * @param med: Estructura mediana
- * @param index_pivot: El índice del pivot
-*/
-Array *lesser_elements(Mediana *med, int index_pivot);
+
 
 /**
- * Test de lesser elements
+ * partition
+ * 
+ * Particiona el arreglo asociado a la estructura Mediana
+ * med con respecto al pivote pivot, modificándola, retornando 
+ * donde quedó el pivot
+ * 
+ * @param med: La estructura Mediana
+ * @param pivot: El pivot
 */
-void test_lesser_elements(void);
+int partition(Mediana *med, int pivot);
 
 /**
- * greater_elements
+ * testPartition
  * 
- * Parte la @param med con respecto a un pivot indicado 
- * en el @param index_pivot, entregando un arreglo de int's 
- * alocado en el heap con los elementos mayores que el pivot
- * 
- * @param med: Estructura mediana
- * @param index_pivot: El índice del pivot
-*/
-Array *greater_elements(Mediana *med, int index_pivot);
-
-/**
- * Test de greater_elements
-*/
-void test_greater_elements(void);
+ * prueba la particion
+*/ 
+void testPartition(void);
 
 /**
  * cut_b

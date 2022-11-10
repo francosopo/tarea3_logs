@@ -4,105 +4,73 @@ int find_median_alg1(Mediana *med){
     return 1;
 }
 
-Array *lesser_elements(Mediana *med, int index_pivot){
-    int *ret_prev = calloc(getMedianSize(med), sizeof(int));
-    if (ret_prev == NULL){
-        perror("ret_prev");
-    }
-    int j_ret = 0;
 
-    //obtener los elementos menores
-    for(int i = 0; i < getMedianSize(med); i++){
-        if(getFromMedian(med, i) < getFromMedian(med, index_pivot)){
-            ret_prev[j_ret] = getFromMedian(med, i);
-            j_ret++;
+
+int partition(Mediana *med, int index_pivot){
+    int i=0, j = getMedianSize(med) - 1;
+    int pivot = getFromMedian(med, index_pivot);
+    int where_is_pivot = index_pivot;
+    while( i < j){
+        if(getFromMedian(med, i) > pivot && getFromMedian(med, j) <= pivot){
+            swapMedian(med, i, j);
+            i++;
+            j--;
+        }else if(getFromMedian(med, i) <= pivot && getFromMedian(med, j) <= pivot){
+            i++;
+        }else if(getFromMedian(med, i) >pivot && getFromMedian(med, j) > pivot){
+            j--;
+        }else{
+            i++;
+            j--;
         }
     }
-    //copiar el arreglo hasta el tamaño indicado por size
-    int size = j_ret;
-    Array *ret = newArray(size);
-    for(int i = 0; i < size; i++){
-        setToArray(ret, i, ret_prev[i]);
+    if(getFromMedian(med, j) > pivot){
+        j--;
     }
-    //librar el arreglo provisorio
-    free(ret_prev);
-
-    // retornar el arreglo limpio
-    return ret;
+    swapMedian(med, j, where_is_pivot);
+    return j;
 }
 
-Array *greater_elements(Mediana *med, int index_pivot){
-    int *ret_prev = calloc(getMedianSize(med), sizeof(int));
-    if (ret_prev == NULL){
-        perror("ret_prev");
-    }
-    int j_ret = 0;
+void testPartition(void){
+    int median_size = 100;
 
-    // obtener los elementos mayores
-    for (int i = 0; i < getMedianSize(med); i++){
-        if(getFromMedian(med, i) > getFromMedian(med, index_pivot)){
-            ret_prev[j_ret] = getFromMedian(med, i);
-            j_ret++;
-        }
+    // generar un tamaño válido > 0 
+    while(median_size == 0){
+        median_size = rand();
     }
 
-    //copiar el arreglo ret_prev hasta el tamaño indicado por size
-    int size = j_ret;
-    Array *ret = newArray(size);
-    for(int i = 0; i< size; i++){
-        setToArray(ret, i ,ret_prev[i]);
+    Mediana *med = newMedian(median_size);
+    int index_pivot = (int) ((double)rand()/ (double)RAND_MAX) * (median_size - 1);
+
+    // llenando el arreglo de Mediana
+    for(int i = 0; i < median_size; i++){
+        setToMedian(med,i,rand());
     }
 
-    // liberar el arreglo provisorio
-    free(ret_prev);
+    int where_is_pivot = partition(med, index_pivot);
 
-    //retornar el arreglo limpio
-    return ret;
-}
-
-void test_lesser_elements(void){
-    printf("\n TEST LESSER ELEMENTS\n");
-    int array_size = 11;
-    Mediana *med = newMedian(array_size);
-    int pivot = 6;
-    for(int i = 0; i < array_size; i++){
-        int rnd = rand();
-        setToMedian(med, i, rnd);
-    }
-    Array *lesser = lesser_elements(med, pivot);
-    for(int i = 0; i< getArraySize(lesser); i++){
-        testAssertTrue((getFromArray(lesser, i) < getFromMedian(med,pivot)));
+    //probando los menores
+    printf("TESTING MENORES\n");
+    for(int i = 0; i < where_is_pivot; i++){
+        testAssertTrue((getFromMedian(med, i) <= getFromMedian(med, where_is_pivot)));
     }
 
-    destroyArray(lesser);
-    destroyMedian(med);
-    
-}
-
-void test_greater_elements(void){
-    printf("\n TEST GREATER ELEMENTS\n");
-
-    int array_size = 11;
-    Mediana *med = newMedian(array_size);
-    int pivot = 6;
-
-    for(int i = 0; i < array_size; i++){
-        int rnd = rand();
-        setToMedian(med, i, rnd);
+    //probando los mayores
+    printf("TESTING MAYORES, index_pivot: %i\n", where_is_pivot);
+    for(int i = where_is_pivot + 1; i < getMedianSize(med); i++){
+        //printf("i: %i, val: %i, pivot %i\n", i, getFromMedian(med, i), getFromMedian(med, where_is_pivot));
+        testAssertTrue((getFromMedian(med, i) > getFromMedian(med, where_is_pivot)));
     }
 
-    Array *greater = greater_elements(med, pivot);
-    for(int i = 0; i< getArraySize(greater); i++){
-        testAssertTrue((getFromArray(greater, i) > getFromMedian(med,pivot)));
-    }
-
-    destroyArray(greater);
     destroyMedian(med);
 }
 
 int main(int argc, char *argv[]){
+    //testSwap();
     srand(time(NULL));
-    test_lesser_elements();
-    test_greater_elements();
-    
+    //test_lesser_elements();
+    //test_greater_elements();
+    //testSwap();
+    //testSwapMedian();
+    testPartition();
 }
