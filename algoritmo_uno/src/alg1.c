@@ -51,7 +51,7 @@ void testPartition(void){
 
     //probando los menores
     printf("TESTING MENORES\n");
-    for(int i = 0; i < where_is_pivot; i++){
+    for(int i = 0; i <= where_is_pivot; i++){
         testAssertTrue((getFromMedian(med, i) <= getFromMedian(med, where_is_pivot)));
     }
 
