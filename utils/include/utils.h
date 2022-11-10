@@ -132,6 +132,30 @@ int getFromMedian(Mediana *med, int index);
 */
 void setToMedian(Mediana *med, int index, int newValue);
 
+/**
+ * swap
+ * 
+ * Intercambia dos valores
+ * 
+ * @param a: El primer valor
+ * @param b: El segundo valor
+*/
+void swap(int *a, int *b);
+
+/**
+ * swapMedian
+ * 
+ * Intercambia dos valores de una estructura Mediana
+ * med indicada por sus índices i y j
+*/
+void swapMedian(Mediana *med, int i, int j);
+
+/**
+ * swapArray
+ * 
+ * Intercambia dos valores de Array indicados por el índice
+*/
+void swapArray(Array *a, int i, int j);
 
 /**
  * Test que prueba el correcto funcionamiento de median
@@ -148,6 +172,20 @@ void testSetGetToMedian(void);
  * @param got: Lo que se obtuvo
 */
 void test(char *name, int expected, int got);
+
+/**
+ * testSwap
+ * 
+ * Testea si swap funciona bien
+*/
+void testSwap(void);
+
+/**
+ * testSwapMedian
+ * 
+ * Testea si swapMedian funciona bien
+*/
+void testSwapMedian(void);
 
 /**
  * testAssertTrue

@@ -64,6 +64,20 @@ void setToMedian(Mediana *med, int index, int newValue){
     setToArray(med->arr, index, newValue);
 }
 
+void swap(int *a, int *b){
+    int prov = *a;
+    *a = *b;
+    *b = prov;
+}
+
+void swapArray(Array *a, int i, int j){
+    swap(&(a->arr[i]), &(a->arr[j]));
+}
+
+void swapMedian(Mediana *med, int i, int j){
+    swapArray(med->arr, i,j);
+}
+
 void testSetGetToMedian(void){
     int array_size = 10;
     int a[] = {1,2,3,4,5,6,7,8,9,10};
@@ -81,14 +95,37 @@ void testSetGetToMedian(void){
     destroyMedian(med);
 }
 
+void testSwap(void){
+    int a = 9;
+    int b = 10;
+    swap(&a, &b);
+    test("Assert Equals Swap",10, a);
+    test("Assert Equals Swap",9, b);
+}
+
+void testSwapMedian(void){
+    int size = 9;
+    Mediana *med = newMedian(size);
+    //llenando med
+    for(int i= 0; i < getMedianSize(med); i++){
+        setToMedian(med, i, i);
+    }
+
+    //cambiando los valores
+    swapMedian(med, 0, size - 1);
+
+    test("Test swap median", 8, getFromMedian(med,0));
+    test("Test swap median", 0, getFromMedian(med,size - 1));
+}
+
 void test(char *name, int expected, int got){
     if(expected != got) fprintf(stderr, "\nTest %s: Expected %i, got %i",name, expected, got);
     else printf("\nTest %s pasado", name);
 }
 
 void testAssertTrue(int value){
-    if (value == 0) fprintf(stderr, "Expected != 0, got %i", value);
-    else printf("Test Assert True pasado\n");
+    if (value == 0) fprintf(stderr, "Expected != 0, got %i\n", value);
+    //else printf("Test Assert True pasado\n");
 }
 
 void holi(){
