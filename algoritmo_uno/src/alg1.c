@@ -6,6 +6,9 @@ int find_median_alg1(Mediana *med){
 
 Array *lesser_elements(Mediana *med, int index_pivot){
     int *ret_prev = calloc(getMedianSize(med), sizeof(int));
+    if (ret_prev == NULL){
+        perror("ret_prev");
+    }
     int j_ret = 0;
 
     //obtener los elementos menores
@@ -16,7 +19,7 @@ Array *lesser_elements(Mediana *med, int index_pivot){
         }
     }
     //copiar el arreglo hasta el tamaño indicado por size
-    int size = j_ret + 1;
+    int size = j_ret;
     Array *ret = newArray(size);
     for(int i = 0; i < size; i++){
         setToArray(ret, i, ret_prev[i]);
@@ -30,6 +33,9 @@ Array *lesser_elements(Mediana *med, int index_pivot){
 
 Array *greater_elements(Mediana *med, int index_pivot){
     int *ret_prev = calloc(getMedianSize(med), sizeof(int));
+    if (ret_prev == NULL){
+        perror("ret_prev");
+    }
     int j_ret = 0;
 
     // obtener los elementos mayores
@@ -40,8 +46,8 @@ Array *greater_elements(Mediana *med, int index_pivot){
         }
     }
 
-    //copiar el arreglo ret hasta el tamaño indicado por size
-    int size = j_ret + 1;
+    //copiar el arreglo ret_prev hasta el tamaño indicado por size
+    int size = j_ret;
     Array *ret = newArray(size);
     for(int i = 0; i< size; i++){
         setToArray(ret, i ,ret_prev[i]);
@@ -55,6 +61,7 @@ Array *greater_elements(Mediana *med, int index_pivot){
 }
 
 void test_lesser_elements(void){
+    printf("\n TEST LESSER ELEMENTS\n");
     int array_size = 11;
     Mediana *med = newMedian(array_size);
     int pivot = 6;
@@ -63,7 +70,6 @@ void test_lesser_elements(void){
         setToMedian(med, i, rnd);
     }
     Array *lesser = lesser_elements(med, pivot);
-    printf("Array lesser size: %i\n", getArraySize(lesser));
     for(int i = 0; i< getArraySize(lesser); i++){
         testAssertTrue((getFromArray(lesser, i) < getFromMedian(med,pivot)));
     }
@@ -74,6 +80,8 @@ void test_lesser_elements(void){
 }
 
 void test_greater_elements(void){
+    printf("\n TEST GREATER ELEMENTS\n");
+
     int array_size = 11;
     Mediana *med = newMedian(array_size);
     int pivot = 6;
@@ -84,10 +92,8 @@ void test_greater_elements(void){
     }
 
     Array *greater = greater_elements(med, pivot);
-    printf("Array greater size: %i\n", getArraySize(greater));
     for(int i = 0; i< getArraySize(greater); i++){
-        printf("From Array: %i, pivot %i\n", getFromArray(greater, i), getFromMedian(med, pivot));
-        testAssertTrue((getFromArray(greater, i)> getFromMedian(med, pivot)));
+        testAssertTrue((getFromArray(greater, i) > getFromMedian(med,pivot)));
     }
 
     destroyArray(greater);
@@ -95,7 +101,7 @@ void test_greater_elements(void){
 }
 
 int main(int argc, char *argv[]){
-    //srand(time(NULL));
+    srand(time(NULL));
     test_lesser_elements();
     test_greater_elements();
     
