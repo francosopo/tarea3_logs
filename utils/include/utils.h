@@ -158,6 +158,55 @@ void swapMedian(Mediana *med, int i, int j);
 void swapArray(Array *a, int i, int j);
 
 /**
+ * partition
+ * 
+ * Particiona el arreglo asociado a la estructura Mediana
+ * med con respecto al pivote pivot, modificándola, retornando 
+ * donde quedó el pivot
+ * 
+ * @param med: La estructura Mediana
+ * @param pivot: El pivot
+*/
+int partition(Mediana *med, int index_pivot);
+
+/**
+ * partitionQuicksort
+ * 
+ * Particiona el arreglo arr mediante el pivot indicado
+ * por el index_pivot
+ * 
+ * @param arr: El arreglo a particionar
+ * @param index_pivot: El índice del pivote seleccionado
+*/
+int partitionQuicksort(Array *arr, int index_pivot, int index_start, int index_end);
+
+/**
+ * quicksortIndexes
+ * 
+ * Ordena el arreglo arr en el rango [index_start, index end]
+ * 
+ * @param arr: El arreglo a ordenar
+ * @param index_start: El índice del inicio
+ * @param index_end: El índice del final
+*/
+void quicksortIndexes(Array *arr, int index_start, int index_end);
+
+/**
+ * quicksort
+ * 
+ * Ejecuta quicksortIndexes en el rango del arreglo 0, arr->size - 1 
+*/
+void quicksort(Array *arr);
+
+/**
+ * testPartition
+ * 
+ * prueba la particion
+*/ 
+void testPartition(void);
+
+
+/**
  * Test que prueba el correcto funcionamiento de median
 */
 void testSetGetToMedian(void);
@@ -186,6 +235,13 @@ void testSwap(void);
  * Testea si swapMedian funciona bien
 */
 void testSwapMedian(void);
+
+/**
+ * test Sort
+ * 
+ * Comprueba que un arreglo esté ordenado
+*/
+void testSort(void);
 
 /**
  * testAssertTrue

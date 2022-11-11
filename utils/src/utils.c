@@ -78,6 +78,103 @@ void swapMedian(Mediana *med, int i, int j){
     swapArray(med->arr, i,j);
 }
 
+int partition(Mediana *med, int index_pivot){
+    int i=0, j = getMedianSize(med) - 1;
+    int pivot = getFromMedian(med, index_pivot);
+    int where_is_pivot = index_pivot;
+    while( i < j){
+        if(getFromMedian(med, i) > pivot && getFromMedian(med, j) <= pivot){
+            swapMedian(med, i, j);
+            i++;
+            j--;
+        }else if(getFromMedian(med, i) <= pivot && getFromMedian(med, j) <= pivot){
+            i++;
+        }else if(getFromMedian(med, i) >pivot && getFromMedian(med, j) > pivot){
+            j--;
+        }else{
+            i++;
+            j--;
+        }
+    }
+    if(getFromMedian(med, j) > pivot){
+        j--;
+    }
+    swapMedian(med, j, where_is_pivot);
+    return j;
+}
+
+int partitionQuicksort(Array *arr, int index_pivot, int index_start, int index_end){
+    int i=index_start, j = index_end;
+    int pivot = getFromArray(arr, index_pivot);
+    int where_is_pivot = index_pivot;
+    while( i < j){
+        if(getFromArray(arr, i) > pivot && getFromArray(arr, j) <= pivot){
+            swapArray(arr, i, j);
+            i++;
+            j--;
+        }else if(getFromArray(arr, i) <= pivot && getFromArray(arr, j) <= pivot){
+            i++;
+        }else if(getFromArray(arr, i) >pivot && getFromArray(arr, j) > pivot){
+            j--;
+        }else{
+            i++;
+            j--;
+        }
+    }
+    if(getFromArray(arr, j) > pivot){
+        j--;
+    }
+    swapArray(arr, j, where_is_pivot);
+    return j;
+}
+
+void quicksortIndexes(Array *arr, int index_start, int index_end){
+    if(index_start > index_end){
+        return ;
+    }
+    int index = (int)( ( (double) rand() ) / ( RAND_MAX ) ) * ( index_end - index_start) + index_start;
+    int index_pivot = partitionQuicksort(arr,index, index_start, index_end);
+    quicksortIndexes(arr, index_start, index_pivot - 1);
+    quicksortIndexes(arr, index_pivot + 1, index_end);
+}
+
+void quicksort(Array *arr){
+    quicksortIndexes(arr, 0, getArraySize(arr) - 1);
+}
+void testPartition(void){
+    int median_size = 100;
+
+    // generar un tamaño válido > 0 
+    while(median_size == 0){
+        median_size = rand();
+    }
+
+    Mediana *med = newMedian(median_size);
+    int index_pivot = (int) ((double)rand()/ (double)RAND_MAX) * (median_size - 1);
+
+    // llenando el arreglo de Mediana
+    for(int i = 0; i < median_size; i++){
+        setToMedian(med,i,rand());
+    }
+
+    int where_is_pivot = partition(med, index_pivot);
+
+    //probando los menores
+    printf("TESTING MENORES\n");
+    for(int i = 0; i <= where_is_pivot; i++){
+        testAssertTrue((getFromMedian(med, i) <= getFromMedian(med, where_is_pivot)));
+    }
+
+    //probando los mayores
+    printf("TESTING MAYORES\n");
+    for(int i = where_is_pivot + 1; i < getMedianSize(med); i++){
+        //printf("i: %i, val: %i, pivot %i\n", i, getFromMedian(med, i), getFromMedian(med, where_is_pivot));
+        testAssertTrue((getFromMedian(med, i) > getFromMedian(med, where_is_pivot)));
+    }
+
+    destroyMedian(med);
+}
+
 void testSetGetToMedian(void){
     int array_size = 10;
     int a[] = {1,2,3,4,5,6,7,8,9,10};
@@ -116,6 +213,27 @@ void testSwapMedian(void){
 
     test("Test swap median", 8, getFromMedian(med,0));
     test("Test swap median", 0, getFromMedian(med,size - 1));
+}
+
+void testSort(void){
+    int size = ((double) rand() /RAND_MAX) * 500;
+    printf("Size: %i\n", size);
+    Array *arr = newArray(size);
+
+    // llenando el arreglo arr
+    for(int i = 0; i < size; i++){
+        setToArray(arr, i, rand());
+    }
+
+    quicksort(arr);
+
+    // compobando que está ordenado
+    for (int i = 0; i < size - 1; i++){
+        testAssertTrue(getFromArray(arr, i) < getFromArray(arr, i + 1));
+    }
+    printf("Test Ordenar pasado\n");
+    destroyArray(arr);
+
 }
 
 void test(char *name, int expected, int got){
