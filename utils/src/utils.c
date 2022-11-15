@@ -1,7 +1,7 @@
 #include <utils.h>
 
 Array *newArray(int len){
-    int *arr = calloc(len, sizeof(int));
+    double *arr = calloc(len, sizeof(double));
     if(arr == NULL){
         perror("arary not created");
         exit(-1);
@@ -40,11 +40,11 @@ void destroyMedian(Mediana *med){
     free(med);
 }
 
-int getFromArray(Array *a, int index){
+double getFromArray(Array *a, int index){
     return (a->arr)[index];
 }
 
-void setToArray(Array *a, int index, int newValue){
+void setToArray(Array *a, int index, double newValue){
     a->arr[index] = newValue;
 }
 
@@ -56,15 +56,15 @@ int getMedianSize(Mediana *med){
     return getArraySize(med->arr);
 }
 
-int getFromMedian(Mediana *med, int index){
+double getFromMedian(Mediana *med, int index){
     return getFromArray(med->arr, index);
 }
 
-void setToMedian(Mediana *med, int index, int newValue){
+void setToMedian(Mediana *med, int index, double newValue){
     setToArray(med->arr, index, newValue);
 }
 
-void swap(int *a, int *b){
+void swap(double *a, double *b){
     int prov = *a;
     *a = *b;
     *b = prov;
@@ -80,23 +80,25 @@ void swapMedian(Mediana *med, int i, int j){
 
 int partition(Mediana *med, int index_pivot){
     int i=0, j = getMedianSize(med) - 1;
-    int pivot = getFromMedian(med, index_pivot);
+    double pivot = getFromMedian(med, index_pivot);
     int where_is_pivot = index_pivot;
+
+    double diferencia_permitida = 0.000001;
     while( i < j){
-        if(getFromMedian(med, i) > pivot && getFromMedian(med, j) <= pivot){
+        if((getFromMedian(med, i) - pivot) > diferencia_permitida && (pivot - getFromMedian(med, j)) >= diferencia_permitida){
             swapMedian(med, i, j);
             i++;
             j--;
-        }else if(getFromMedian(med, i) <= pivot && getFromMedian(med, j) <= pivot){
+        }else if((pivot - getFromMedian(med, i)) >= diferencia_permitida && (pivot - getFromMedian(med, j)) >= diferencia_permitida){
             i++;
-        }else if(getFromMedian(med, i) >pivot && getFromMedian(med, j) > pivot){
+        }else if((getFromMedian(med, i) - pivot) > diferencia_permitida && (getFromMedian(med, j) - pivot) > diferencia_permitida){
             j--;
         }else{
             i++;
             j--;
         }
     }
-    if(getFromMedian(med, j) > pivot){
+    if(getFromMedian(med, j) - pivot > diferencia_permitida){
         j--;
     }
     swapMedian(med, j, where_is_pivot);
@@ -105,23 +107,25 @@ int partition(Mediana *med, int index_pivot){
 
 int partitionQuicksort(Array *arr, int index_pivot, int index_start, int index_end){
     int i=index_start, j = index_end;
-    int pivot = getFromArray(arr, index_pivot);
+    double pivot = getFromArray(arr, index_pivot);
     int where_is_pivot = index_pivot;
+
+    double diferencia_permitida = 0.00001;
     while( i < j){
-        if(getFromArray(arr, i) > pivot && getFromArray(arr, j) <= pivot){
+        if(getFromArray(arr, i) - pivot > diferencia_permitida && pivot - getFromArray(arr, j) > diferencia_permitida){
             swapArray(arr, i, j);
             i++;
             j--;
-        }else if(getFromArray(arr, i) <= pivot && getFromArray(arr, j) <= pivot){
+        }else if(pivot - getFromArray(arr, i) > diferencia_permitida && pivot - getFromArray(arr, j) > diferencia_permitida){
             i++;
-        }else if(getFromArray(arr, i) >pivot && getFromArray(arr, j) > pivot){
+        }else if(getFromArray(arr, i) - pivot > diferencia_permitida && getFromArray(arr, j) - pivot > diferencia_permitida){
             j--;
         }else{
             i++;
             j--;
         }
     }
-    if(getFromArray(arr, j) > pivot){
+    if(getFromArray(arr, j) - pivot > diferencia_permitida ){
         j--;
     }
     swapArray(arr, j, where_is_pivot);
@@ -143,6 +147,7 @@ void quicksort(Array *arr){
 }
 void testPartition(void){
     int median_size = 100;
+    double tolerancia = 0.00001;
 
     // generar un tamaño válido > 0 
     while(median_size == 0){
@@ -150,26 +155,29 @@ void testPartition(void){
     }
 
     Mediana *med = newMedian(median_size);
-    int index_pivot = (int) ((double)rand()/ (double)RAND_MAX) * (median_size - 1);
+    int index_pivot = (int) (((double)rand()/ (double)RAND_MAX) * (median_size - 1));
 
     // llenando el arreglo de Mediana
     for(int i = 0; i < median_size; i++){
-        setToMedian(med,i,rand());
+        setToMedian(med,i,( (double) rand() / RAND_MAX));
+        printf("i-esimo: %f\n", getFromMedian(med, i));
     }
 
     int where_is_pivot = partition(med, index_pivot);
 
     //probando los menores
     printf("TESTING MENORES\n");
-    for(int i = 0; i <= where_is_pivot; i++){
-        testAssertTrue((getFromMedian(med, i) <= getFromMedian(med, where_is_pivot)));
+    for(int i = 0; i < where_is_pivot; i++){
+        printf("pivot: %f, from_median: %f\n", getFromMedian(med, where_is_pivot), getFromMedian(med, i));
+        testAssertTrue(( getFromMedian(med, where_is_pivot) - getFromMedian(med, i) >= tolerancia));
     }
 
     //probando los mayores
     printf("TESTING MAYORES\n");
     for(int i = where_is_pivot + 1; i < getMedianSize(med); i++){
         //printf("i: %i, val: %i, pivot %i\n", i, getFromMedian(med, i), getFromMedian(med, where_is_pivot));
-        testAssertTrue((getFromMedian(med, i) > getFromMedian(med, where_is_pivot)));
+        printf("pivot: %f, from_median: %f\n", getFromMedian(med, where_is_pivot), getFromMedian(med, i));
+        testAssertTrue((getFromMedian(med, i) - getFromMedian(med, where_is_pivot) >= tolerancia));
     }
 
     destroyMedian(med);
@@ -177,7 +185,8 @@ void testPartition(void){
 
 void testSetGetToMedian(void){
     int array_size = 10;
-    int a[] = {1,2,3,4,5,6,7,8,9,10};
+    double a[] = {1,2,3,4,5,6,7,8,9,10};
+    double tolerancia = 0.00001;
 
     Mediana *med = newMedian(array_size);
     for(int i = 0; i < array_size; i++){
@@ -185,7 +194,7 @@ void testSetGetToMedian(void){
     }
 
     for(int i = 0; i < array_size; i++){
-        test("set get to median ", a[i], getFromMedian(med,i));
+        testAssertTrue( fabs(a[i] - getFromMedian(med,i)) < tolerancia);
     }
     printf("\n");
 
@@ -193,43 +202,47 @@ void testSetGetToMedian(void){
 }
 
 void testSwap(void){
-    int a = 9;
-    int b = 10;
+    double a = 9;
+    double b = 10;
+    int tolerancia = 0.00001;
     swap(&a, &b);
-    test("Assert Equals Swap",10, a);
-    test("Assert Equals Swap",9, b);
+    testAssertTrue(fabs(10 - a) <= tolerancia); 
+    testAssertTrue(fabs(9 - b) <= tolerancia);
 }
 
 void testSwapMedian(void){
     int size = 9;
     Mediana *med = newMedian(size);
+    double tolerancia = 0.00001;
     //llenando med
     for(int i= 0; i < getMedianSize(med); i++){
-        setToMedian(med, i, i);
+        setToMedian(med, i, (double) i);
     }
 
     //cambiando los valores
     swapMedian(med, 0, size - 1);
 
-    test("Test swap median", 8, getFromMedian(med,0));
-    test("Test swap median", 0, getFromMedian(med,size - 1));
+    testAssertTrue(8 - getFromMedian(med, 0) < tolerancia);
+    testAssertTrue( 0 - getFromMedian(med,size - 1) < tolerancia);
 }
 
 void testSort(void){
     int size = ((double) rand() /RAND_MAX) * 500;
     printf("Size: %i\n", size);
+
+    int tolerancia = 0.00001;
     Array *arr = newArray(size);
 
     // llenando el arreglo arr
     for(int i = 0; i < size; i++){
-        setToArray(arr, i, rand());
+        setToArray(arr, i, (double) rand());
     }
 
     quicksort(arr);
 
     // compobando que está ordenado
     for (int i = 0; i < size - 1; i++){
-        testAssertTrue(getFromArray(arr, i) < getFromArray(arr, i + 1));
+        testAssertTrue(getFromArray(arr, i + 1) - getFromArray(arr, i) > tolerancia);
     }
     printf("Test Ordenar pasado\n");
     destroyArray(arr);

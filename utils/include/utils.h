@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+#include <math.h>
 /**
  * Estructura Array
  * 
@@ -14,7 +14,7 @@
 */
 typedef struct array{
     int len;
-    int *arr;
+    double *arr;
 }Array;
 
 /**
@@ -78,7 +78,7 @@ void destroyArray(Array *arr);
  * @param a: El Array
  * @param index: El índice
 */
-int getFromArray(Array *a, int index);
+double getFromArray(Array *a, int index);
 
 /**
  * setToArray
@@ -90,7 +90,7 @@ int getFromArray(Array *a, int index);
  * @param index: El índice
  * @param newValue: El nuevo valor
 */
-void setToArray(Array *a, int index, int newValue);
+void setToArray(Array *a, int index, double newValue);
 
 /**
  * getArraySize
@@ -118,7 +118,7 @@ int getMedianSize(Mediana *med);
  * @param med: La estructura Mediana
  * @param index: El índice a consultar
 */
-int getFromMedian(Mediana *med, int index);
+double getFromMedian(Mediana *med, int index);
 
 /**
  * setToMedian
@@ -130,7 +130,7 @@ int getFromMedian(Mediana *med, int index);
  * @param index: El índice del arreglo que se quiere cambiar
  * @param newValue: El nuevo valor al que se quiere actualizar
 */
-void setToMedian(Mediana *med, int index, int newValue);
+void setToMedian(Mediana *med, int index, double newValue);
 
 /**
  * swap
@@ -140,7 +140,7 @@ void setToMedian(Mediana *med, int index, int newValue);
  * @param a: El primer valor
  * @param b: El segundo valor
 */
-void swap(int *a, int *b);
+void swap(double *a, double *b);
 
 /**
  * swapMedian
