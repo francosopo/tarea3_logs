@@ -65,7 +65,7 @@ void setToMedian(Mediana *med, int index, double newValue){
 }
 
 void swap(double *a, double *b){
-    int prov = *a;
+    double prov = *a;
     *a = *b;
     *b = prov;
 }
@@ -81,8 +81,9 @@ void swapMedian(Mediana *med, int i, int j){
 int partition(Mediana *med, int index_pivot){
     int i=0, j = getMedianSize(med) - 1;
     double pivot = getFromMedian(med, index_pivot);
-    int where_is_pivot = index_pivot;
-
+    swapMedian(med, index_pivot, i);
+    int where_is_pivot = i; // el pivote se deja en el inicio
+    i++;
     double diferencia_permitida = 0.000001;
     while( i < j){
         if((getFromMedian(med, i) - pivot) > diferencia_permitida && (pivot - getFromMedian(med, j)) >= diferencia_permitida){
@@ -98,7 +99,7 @@ int partition(Mediana *med, int index_pivot){
             j--;
         }
     }
-    if(getFromMedian(med, j) - pivot > diferencia_permitida){
+    if(getFromMedian(med, j) - pivot >= diferencia_permitida){
         j--;
     }
     swapMedian(med, j, where_is_pivot);
@@ -160,7 +161,6 @@ void testPartition(void){
     // llenando el arreglo de Mediana
     for(int i = 0; i < median_size; i++){
         setToMedian(med,i,( (double) rand() / RAND_MAX));
-        printf("i-esimo: %f\n", getFromMedian(med, i));
     }
 
     int where_is_pivot = partition(med, index_pivot);
@@ -168,16 +168,21 @@ void testPartition(void){
     //probando los menores
     printf("TESTING MENORES\n");
     for(int i = 0; i < where_is_pivot; i++){
-        printf("pivot: %f, from_median: %f\n", getFromMedian(med, where_is_pivot), getFromMedian(med, i));
-        testAssertTrue(( getFromMedian(med, where_is_pivot) - getFromMedian(med, i) >= tolerancia));
+        if((getFromMedian(med, where_is_pivot) - getFromMedian(med, i) > tolerancia) == 0){
+            printf("from_median: %f, index %i\n", getFromMedian(med, i), i);
+        }
+        testAssertTrue(( getFromMedian(med, where_is_pivot) - getFromMedian(med, i) > tolerancia));
     }
-
+    //printf("Index pivot: %i, valor: %f\n", where_is_pivot, getFromMedian(med, where_is_pivot));
     //probando los mayores
     printf("TESTING MAYORES\n");
     for(int i = where_is_pivot + 1; i < getMedianSize(med); i++){
         //printf("i: %i, val: %i, pivot %i\n", i, getFromMedian(med, i), getFromMedian(med, where_is_pivot));
-        printf("pivot: %f, from_median: %f\n", getFromMedian(med, where_is_pivot), getFromMedian(med, i));
-        testAssertTrue((getFromMedian(med, i) - getFromMedian(med, where_is_pivot) >= tolerancia));
+        //printf("pivot: %f, from_median: %f\n", getFromMedian(med, where_is_pivot), getFromMedian(med, i));
+        if( (( getFromMedian(med, i) - getFromMedian(med, where_is_pivot)) > tolerancia) == 0){
+            printf("from_median: %f, index %i\n", getFromMedian(med, i), i);
+        }
+        testAssertTrue((getFromMedian(med, i) - getFromMedian(med, where_is_pivot) > tolerancia));
     }
 
     destroyMedian(med);

@@ -25,7 +25,7 @@ void test_find_median_alg1(void){
 int main(int argc, char *argv[]){
     //testSetGetToMedian();
     //testSwap();
-    //srand(time(NULL));;
+    srand(time(NULL));;
     //estSwap();
     //testSwapMedian();
     testPartition();
