@@ -110,6 +110,13 @@ int getArraySize(Array *a);
 int getMedianSize(Mediana *med);
 
 /**
+ * getArray
+ * 
+ * Obtiene el arreglo que está dentro de med
+*/
+Array *getArray(Mediana *med);
+
+/**
  * getFromMedian
  * 
  * Obtiene el index-ésimo elemento del arreglo 
@@ -119,6 +126,29 @@ int getMedianSize(Mediana *med);
  * @param index: El índice a consultar
 */
 double getFromMedian(Mediana *med, int index);
+
+/**
+ * getMedian
+ * 
+ * Obtiene la mediana de un Mediana dentro de un 
+ * sub intrevalo de indices. El arreglo dentro de
+ * med debe estar ordenado previamente
+ * 
+ * @param med: Estructura Mediana
+ * @param start_index: Índice del inicio
+ * @param end_index: Índice del final
+*/
+double getMedian(Mediana *med, int start_index, int end_index){
+    int median_size = end_index - start_index + 1;
+    double median;
+    // hay una cantidad par de elementos
+    if(median_size % 2 == 0){
+        median = (getFromMedian(med, median_size/2) + getFromMedian(med, median_size/2 + 1))/2;
+    }else{
+        median = getFromMedian(med, median_size/2);
+    }
+    return median;
+}
 
 /**
  * setToMedian

@@ -56,6 +56,10 @@ int getMedianSize(Mediana *med){
     return getArraySize(med->arr);
 }
 
+Array *getArray(Mediana *med){
+    return med->arr;
+}
+
 double getFromMedian(Mediana *med, int index){
     return getFromArray(med->arr, index);
 }
@@ -109,15 +113,16 @@ int partition(Mediana *med, int index_pivot){
 int partitionQuicksort(Array *arr, int index_pivot, int index_start, int index_end){
     int i=index_start, j = index_end;
     double pivot = getFromArray(arr, index_pivot);
-    int where_is_pivot = index_pivot;
-
+    swapArray(arr, index_pivot,i);
+    int where_is_pivot = i;
+    i++;
     double diferencia_permitida = 0.00001;
     while( i < j){
-        if(getFromArray(arr, i) - pivot > diferencia_permitida && pivot - getFromArray(arr, j) > diferencia_permitida){
+        if(getFromArray(arr, i) - pivot > diferencia_permitida && pivot - getFromArray(arr, j) >= diferencia_permitida){
             swapArray(arr, i, j);
             i++;
             j--;
-        }else if(pivot - getFromArray(arr, i) > diferencia_permitida && pivot - getFromArray(arr, j) > diferencia_permitida){
+        }else if(pivot - getFromArray(arr, i) >= diferencia_permitida && pivot - getFromArray(arr, j) >= diferencia_permitida){
             i++;
         }else if(getFromArray(arr, i) - pivot > diferencia_permitida && getFromArray(arr, j) - pivot > diferencia_permitida){
             j--;
@@ -126,7 +131,7 @@ int partitionQuicksort(Array *arr, int index_pivot, int index_start, int index_e
             j--;
         }
     }
-    if(getFromArray(arr, j) - pivot > diferencia_permitida ){
+    if(getFromArray(arr, j) - pivot >= diferencia_permitida ){
         j--;
     }
     swapArray(arr, j, where_is_pivot);

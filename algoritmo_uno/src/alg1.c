@@ -1,7 +1,47 @@
 #include <alg1.h>
 
-double find_median_alg1(Mediana *med){
-    return 1;
+int find_median_alg1(Mediana *med, int c){
+    int size = getMedianSize(med);
+    if(size == 1){
+        return 0;
+    }
+    int index_pivot = find_pivot(med, c);
+    int my_med = partition(med, index_pivot);
+    if((size << 31) & (-1) == 0){// el size es par
+        
+    }
+}
+
+int find_pivot(Mediana *med, int c){
+    int size = getMedianSize(med);
+    if(size == 1){
+        return 0;
+    }
+  // c es impar
+    // obtener los indices para cortar el arreglo 
+    // dentro de med
+    int indexes[size/c];
+    Mediana *medians = newMedian(c);
+
+    // obtenemos los indices para cortar el arreglo
+    for(int i = 0; i < c; i++){
+        indexes[i] = c * i;
+    }
+    
+    indexes[c - 1] = size - 1;
+
+    // ordenamos cada subarreglo
+    for(int i = 0; i < c - 1; i++){
+        quicksortIndexes(getArray(med),indexes[i], indexes[i + 1] - 1);
+    }
+
+    for(int i = 0; i < c - 1; i++){
+        setToMedian(medians,i, getMedian(med,indexes[i], indexes[i + 1] - 1));
+    }
+
+    int ret = find_median_alg1(medians,c);
+    destroyMedian(medians);
+    return ret;
 }
 
 void test_find_median_alg1(void){
@@ -23,11 +63,11 @@ void test_find_median_alg1(void){
 }
 
 int main(int argc, char *argv[]){
+    srand(time(NULL));
     //testSetGetToMedian();
     //testSwap();
-    srand(time(NULL));;
-    //estSwap();
+    
     //testSwapMedian();
-    testPartition();
+    //testPartition();
     //testSort();
 }
