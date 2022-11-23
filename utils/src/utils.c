@@ -82,8 +82,8 @@ void swapMedian(Mediana *med, int i, int j){
     swapArray(med->arr, i,j);
 }
 
-int partition(Mediana *med, int index_pivot){
-    int i=0, j = getMedianSize(med) - 1;
+int partition(Mediana *med, int index_pivot, int index_start, int index_end){
+    int i=index_start, j = index_end;
     double pivot = getFromMedian(med, index_pivot);
     swapMedian(med, index_pivot, i);
     int where_is_pivot = i; // el pivote se deja en el inicio
@@ -168,7 +168,7 @@ void testPartition(void){
         setToMedian(med,i,( (double) rand() / RAND_MAX));
     }
 
-    int where_is_pivot = partition(med, index_pivot);
+    int where_is_pivot = partition(med, index_pivot, 0, median_size - 1);
 
     //probando los menores
     printf("TESTING MENORES\n");

@@ -138,7 +138,7 @@ double getFromMedian(Mediana *med, int index);
  * @param start_index: Índice del inicio
  * @param end_index: Índice del final
 */
-double getMedian(Mediana *med, int start_index, int end_index){
+/*double getMedian(Mediana *med, int start_index, int end_index){
     int median_size = end_index - start_index + 1;
     double median;
     // hay una cantidad par de elementos
@@ -148,7 +148,7 @@ double getMedian(Mediana *med, int start_index, int end_index){
         median = getFromMedian(med, median_size/2);
     }
     return median;
-}
+}*/
 
 /**
  * setToMedian
@@ -197,7 +197,7 @@ void swapArray(Array *a, int i, int j);
  * @param med: La estructura Mediana
  * @param pivot: El pivot
 */
-int partition(Mediana *med, int index_pivot);
+int partition(Mediana *med, int index_pivot, int index_start, int index_end);
 
 /**
  * partitionQuicksort
