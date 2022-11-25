@@ -13,15 +13,15 @@ int getMedianIndexFromArrayIndexes(Mediana *med, int index_start, int index_end)
     ret = index_start + (size - 1) / 2;
     return ret;
 }
-double find_median_alg1(Mediana *med, int c, int index_start, int index_end, int k){
+int find_median_alg1(Mediana *med, int c, int index_start, int index_end, int k){
     int size = index_end - index_start + 1;
     if(index_start >= index_end){
-        return getFromMedian(med, index_end); // verificar que sea el index_end el que se retorna correctamente
+        return index_end; // verificar que sea el index_end el que se retorna correctamente
     }
     int index_pivot = find_pivot(med, c, k, index_start, index_end);
     int my_med = partition(med, index_pivot, index_start, index_end);
     if(my_med == (k)){
-        return getFromMedian(med, my_med);
+        return my_med;
     }else{
     // para escoger el indice del pivot se requiere saber si el 
     // tamaño es o no par
@@ -73,8 +73,9 @@ int find_pivot(Mediana *med, int c, int k, int index_start, int index_end){
         setToMedian(medians,i, getMedianIndexFromArrayIndexes(med, indexes[i], indexes[i + 1] - 1));
     }
     //ordenamos el arreglo C
-    quicksort(getArray(medians));
-    int ret = getMedianIndexFromArrayIndexes(medians, 0, size/c);
+    //quicksort(getArray(medians));
+    //int ret = getMedianIndexFromArrayIndexes(medians, 0, size/c);
+    int ret = find_median_alg1(medians, c, 0, size/c - 1, (size/c)/2);
     //destroyMedian(medians);
 
     // retorna el índice menor de la mediana
@@ -85,17 +86,19 @@ double median(Mediana *med, int c){
     int size = getMedianSize(med);
     int k = (size - 1)/2;
     if(((size << 31 ) & -1) == 0){
-        double m = find_median_alg1(med, c, 0, size - 1, k);
+        int m = find_median_alg1(med, c, 0, size - 1, k);
+        double menor = getFromMedian(med, m);
         for(int i = 0; i < size; i++){
-            if(abs(getFromMedian(med, i) - m) < 0.00001){
+            if(abs(getFromMedian(med, i) - menor) < 0.00001){
                 setToMedian(med, i, DBL_MAX);
                 break;
             }
         }
-        double m2 = find_median_alg1(med, c, 0, size - 1,k);
-        return (m + m2) / 2;
+        int m2 = find_median_alg1(med, c, 0, size - 1,k);
+        double mayor = getFromMedian(med, m2);
+        return (menor + mayor) / 2;
     }else{
-        return find_median_alg1(med, c, 0, size - 1, k);
+        return getFromMedian(med, find_median_alg1(med, c, 0, size - 1, k));
     }
 }
 
@@ -125,7 +128,7 @@ void test_find_median_alg1(void){
     //double b_par[30]
 }
 
-void test_median_odd(void){
+void test_median_even(void){
     double a_par[8] = {5,10,15,20,25,30,35,40};
     Array a_arr_par = {8, a_par};
     Mediana med_3 = {0, &a_arr_par};
@@ -133,6 +136,7 @@ void test_median_odd(void){
 
     double expected_3 = 22.5;
     double got_3 = median(&med_3,c);
+    printf("Expected: %0.3f, got %0.3f\n", expected_3, got_3);
     testAssertTrue(abs(expected_3 - got_3) < 0.00001);
 
     double b_par[16]= {28,8,26,2,22,12,6,24,20,14,4,16,30,10,18,32};
@@ -140,6 +144,7 @@ void test_median_odd(void){
     Mediana med_4 = {0,&a};
     double expected_4 = 17.0;
     double got_4 = median(&med_4, c);
+    printf("Expected: %0.3f, got %0.3f\n", expected_4, got_4);
     testAssertTrue(abs(expected_4 - got_4) < 0.00001);
 }
 
@@ -220,7 +225,7 @@ void generate_stats(void){
 }
 
 int main(int argc, char *argv[]){
-    srand(time(NULL));
+    //srand(time(NULL));
     //testSetGetToMedian();
     //testSwap();
     
@@ -228,9 +233,9 @@ int main(int argc, char *argv[]){
     //testPartition();
     //testSort();
 
-    test_find_median_alg1();
-    test_median_odd();
+    //test_find_median_alg1();
+    //test_median_even();
 
     test_esfuerzo();
-    generate_stats();
+    //generate_stats();
 }

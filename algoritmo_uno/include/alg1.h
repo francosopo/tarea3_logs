@@ -7,12 +7,12 @@
 /**
  * find_median_alg
  * 
- * Encuentra el valor de la mediana del alg 1
+ * Encuentra el indice de la mediana del alg 1
  * 
  * @param m Estructura mediana
  * @param c el parametro a cortar
 */
-double find_median_alg1(Mediana *m, int c, int index_start, int index_end, int k);
+int find_median_alg1(Mediana *m, int c, int index_start, int index_end, int k);
 
 /**
  * find_pivot
