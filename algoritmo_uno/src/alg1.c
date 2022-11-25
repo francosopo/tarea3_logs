@@ -18,6 +18,17 @@ int find_median_alg1(Mediana *med, int c, int index_start, int index_end, int k)
     if(index_start >= index_end){
         return index_end; // verificar que sea el index_end el que se retorna correctamente
     }
+
+    if(size < c){
+        quicksortIndexes(getArray(med), index_start, index_end);
+        //if(((size << 31) & -1) ==0){ //size es par
+        int idx = index_start + (size - 1)/2;
+        return idx;
+    }
+
+    /*if (size < c){
+        return index_start + size/2 - 1;
+    }*/
     int index_pivot = find_pivot(med, c, k, index_start, index_end);
     int my_med = partition(med, index_pivot, index_start, index_end);
     if(my_med == (k)){
@@ -46,12 +57,12 @@ int find_median_alg1(Mediana *med, int c, int index_start, int index_end, int k)
 int find_pivot(Mediana *med, int c, int k, int index_start, int index_end){
     int size = index_end - index_start + 1;
     if(size == 1){
-        return 0;
+        return index_start;
     }
   // c es impar
     // obtener los indices para cortar el arreglo 
     // dentro de med
-    int indexes[size/c];
+    int indexes[size/c + 1];
 
     // medians es el arreglo c
     Mediana *medians = newMedian(size/c);
@@ -61,7 +72,7 @@ int find_pivot(Mediana *med, int c, int k, int index_start, int index_end){
         indexes[i] = index_start + c * i;
     }
     
-    indexes[size/c - 1] = index_start + size - 1;
+    indexes[size/c] = index_start + size - 1;
 
     // ordenamos cada subarreglo
     for(int i = 0; i < size/c - 1; i++){
@@ -72,11 +83,8 @@ int find_pivot(Mediana *med, int c, int k, int index_start, int index_end){
     for(int i = 0; i < size/c - 1; i++){
         setToMedian(medians,i, getMedianIndexFromArrayIndexes(med, indexes[i], indexes[i + 1] - 1));
     }
-    //ordenamos el arreglo C
-    //quicksort(getArray(medians));
-    //int ret = getMedianIndexFromArrayIndexes(medians, 0, size/c);
     int ret = find_median_alg1(medians, c, 0, size/c - 1, (size/c)/2);
-    //destroyMedian(medians);
+    destroyMedian(medians);
 
     // retorna el índice menor de la mediana
     return index_start + c * ret + 1;
@@ -132,7 +140,7 @@ void test_median_even(void){
     double a_par[8] = {5,10,15,20,25,30,35,40};
     Array a_arr_par = {8, a_par};
     Mediana med_3 = {0, &a_arr_par};
-    int c = 3;
+    int c = 5;
 
     double expected_3 = 22.5;
     double got_3 = median(&med_3,c);
