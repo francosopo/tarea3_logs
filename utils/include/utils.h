@@ -231,6 +231,23 @@ void quicksortIndexes(Array *arr, int index_start, int index_end);
 void quicksort(Array *arr);
 
 /**
+ * getIndex
+ * 
+ * Obtiene el indice de un elemento de Mediana
+ * 
+*/
+int getIndex(Mediana *med, double value);
+
+/**
+ * promedios
+ * 
+ * Calcula el promedio de los valores de un arreglo
+ * 
+ * @param arr: El arreglo
+*/
+double promedios(Array *arr);
+
+/**
  * testPartition
  * 
  * prueba la particion

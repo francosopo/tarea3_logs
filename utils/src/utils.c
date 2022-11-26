@@ -151,6 +151,26 @@ void quicksortIndexes(Array *arr, int index_start, int index_end){
 void quicksort(Array *arr){
     quicksortIndexes(arr, 0, getArraySize(arr) - 1);
 }
+
+double promedios(Array *arr){
+    double sum = 0;
+    int size = getArraySize(arr);
+    for(int i = 0; i < size; i++){
+        sum += getFromArray(arr,i);
+    }
+    return sum/size;
+}
+
+int getIndex(Mediana *med, double value){
+    int size = getMedianSize(med);
+    int ret = -1;
+    for(int i= 0; i < size; i++){
+        if((getFromMedian(med, i) - value) < 0.00001){
+            return i;
+        }
+    }
+    return ret;
+}
 void testPartition(void){
     int median_size = 100;
     double tolerancia = 0.00001;

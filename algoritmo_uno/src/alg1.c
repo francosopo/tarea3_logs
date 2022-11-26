@@ -157,7 +157,7 @@ void test_median_even(void){
 }
 
 void test_esfuerzo(void){
-    int c = 11;
+    int c = 9;
     for (int i = 0; i < 500; i++){
         int max_number = 501;
         double median_number = (rand() / RAND_MAX) * max_number;
@@ -199,37 +199,49 @@ void test_esfuerzo(void){
 }
 
 void generate_stats(void){
-    int MAX_TRIES = 100;
+    int MAX_C_SIZE = 15;
     int MAX_VALUE = INT_MAX;
-    int c[MAX_TRIES];
-    for(int i = 0; i < MAX_TRIES; i++){
-        c[i] = 2 * (i + 1) + 1; // c es siempre impar
+    int c[MAX_C_SIZE];
+    for(int i = 0; i < MAX_C_SIZE; i++){
+        c[i] = 2*(i + 1) + 1; // c es siempre impar
     }
-
-    // generando numeros aleatorios
-    int MAX_SIZE = 600;
-    Mediana *med = newMedian(MAX_SIZE);
-
-    for( int i = 0; i < MAX_SIZE; i++){
-        setToMedian(med, i, (((double) rand()) / RAND_MAX) * MAX_VALUE);
-    }
-
     FILE *out = fopen("./alg1.csv", "w");
     if(out == NULL){
         perror("file:");
         exit(-1);
     }
-    fprintf(out, "%s,%s\n", "c", "tiempo");
-    for(int i = 0; i < MAX_TRIES; i++){
-        clock_t begin = clock();
-            median(med,c[i]);
-        clock_t end = clock();
-        double delta = ((double) (end - begin)) / CLOCKS_PER_SEC;
-        fprintf(out, "%i, %0.9f\n", c[i], delta);
-        fprintf(stdout, "Completado %0.2f\r", (((double) i) /MAX_TRIES ) * 100);
+    fprintf(out, "%s,%s,%s\n","max_size", "c", "time");
+    // generando numeros aleatorios
+    for (int r = 0; r <= 4; r++){ // i = 20 max
+        int MAX_SIZE = 1 << (16 + r);
+        Mediana *med = newMedian(MAX_SIZE);
+        
+        
+        printf("\n [!] Generando los numeros para SIZE = %i\n", MAX_SIZE);
+        for( int i = 0; i < MAX_SIZE; i++){
+            setToMedian(med, i, (((double) rand()) / RAND_MAX) * MAX_VALUE);
+        }
+        for(int i = 0; i < MAX_C_SIZE; i++){
+            printf("\n [!] Calculando estadisticas para c = %i\n", c[i]);
+            Array *proms = newArray(MAX_C_SIZE);
+            for (int k = 0; k < 50;k++){ // promedio para un solo c
+                clock_t begin = clock();
+                    median(med,c[i]);
+                clock_t end = clock();
+                double delta = ((double) (end - begin)) / CLOCKS_PER_SEC;
+                setToArray(proms,i,delta);
+            }
+
+            // obtenido el promedio de ejecuciones para un solo c
+            double prom = promedios(proms);
+            fprintf(out, "%i,%i, %0.9f\n",MAX_SIZE, c[i], prom);
+            destroyArray(proms);
+        }
+        fprintf(stdout, "Completado %0.2f\r", (((double) (r + 1))) /(4) * 100);
+        destroyMedian(med);
     }
     fclose(out);
-    destroyMedian(med);
+    
 }
 
 int main(int argc, char *argv[]){
@@ -244,6 +256,6 @@ int main(int argc, char *argv[]){
     //test_find_median_alg1();
     //test_median_even();
 
-    test_esfuerzo();
-    //generate_stats();
+    //test_esfuerzo();
+    generate_stats();
 }
