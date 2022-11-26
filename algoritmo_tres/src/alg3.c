@@ -7,7 +7,7 @@ int find_median_alg3(Mediana *arr, double epsilon, double alpha,double *prob_emp
     double total = 100;
     double prob_tentativa = exitos/ total;
     double size = (double) getMedianSize(arr);
-    double mediana = 0;
+    double mediana = getFromMedian(arr, 0);
     int index_pivot = 0;
     for (int c = 3; c < size; c= c + 2){
         int counter = 0;
@@ -19,7 +19,7 @@ int find_median_alg3(Mediana *arr, double epsilon, double alpha,double *prob_emp
 
             // se obtienen los c indices al azar
             for(int i = 0; i < c; i++){
-                int index = ((double) rand() / RAND_MAX) * (c - 1);
+                int index = ((double) rand() / RAND_MAX) * (size - 1);
                 setToMedian(aux, i, getFromMedian(arr, index));
             }
 
@@ -50,6 +50,20 @@ int find_median_alg3(Mediana *arr, double epsilon, double alpha,double *prob_emp
     return mediana;
 }
 
+void test_un_arreglo(void){
+    int SIZE = 500;
+    int MAX_VALUE = INT_MAX;
+    Mediana *med = newMedian(SIZE);
+
+    double mediana_candidate = ((double)rand()) / RAND_MAX * MAX_VALUE;
+
+    for(int i = 0; i < SIZE; i++){
+        setToMedian(med, i, (rand() / RAND_MAX)* MAX_VALUE);
+    }
+
+    destroyMedian(med);
+}
+
 void test_esfuerzo(void){
     int MAX_VALUE = INT_MAX;
     int MAX_SIZE = 1000;
@@ -58,9 +72,11 @@ void test_esfuerzo(void){
     double prob_empirica = 0;
     int index_pivot = 0;
     for (int j = START; j < MAX_SIZE; j++ ){
-        printf("[!] Iteracion %i\n ", j - START);
+        printf("\n [!] Iteracion %i\n ", j - START);
+
         double mediana = ((double)rand()) /RAND_MAX * MAX_VALUE;
         Mediana *med = newMedian(j);
+
         for(int i = 0; i < j/2; i++){
             double value1 = ((double) rand()) / RAND_MAX * (mediana - 1);
             double value2 = mediana + ((double) rand()) / RAND_MAX * (mediana - 1);
@@ -68,9 +84,10 @@ void test_esfuerzo(void){
             setToMedian(med, i + (j - 1) / 2, value2);
         }
         setToMedian(med, 300,mediana);
-        if((find_median_alg3(med, 0.1,0.01, &prob_empirica, &index_pivot) - mediana) < 0.00001){
+        find_median_alg3(med, 0.1,0.01, &prob_empirica, &index_pivot);
+        if(( getFromMedian(med, index_pivot) - mediana) < 0.00001){
             exitos += 1;
-            printf("\n [!] probabilidad empirica: %0.6f, index_pivot: %i\n", prob_empirica, index_pivot);
+            printf("\n [!] probabilidad empirica: %0.6f, index_pivot: %i, exitos %0.3f \n", prob_empirica, index_pivot, exitos / (MAX_SIZE - START) * 100);
         }
         
     }
