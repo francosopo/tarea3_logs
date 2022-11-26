@@ -1,4 +1,4 @@
-CFLAGS= -Wall -pedantic -std=c99 -g
+CFLAGS= -Wall -pedantic -std=c99 -g -O
 INCLUDE_FLAGS = -I ./utils/include
 UTILS = utils.o
 BUILD_DIRECTORY= build
@@ -46,7 +46,7 @@ cptw: $(UTILS)
 
 cpt: $(UTILS)
 	-mkdir ./algoritmo_tres/$(BUILD_DIRECTORY)
-	gcc $(CFLAGS) -o ./algoritmo_tres/$(BUILD_DIRECTORY)/parte_tres -I ./algoritmo_tres/include  $(INCLUDE_FLAGS) ./algoritmo_tres/src/alg3.c $(UTILS)
+	gcc $(CFLAGS) -o ./algoritmo_tres/$(BUILD_DIRECTORY)/parte_tres -I ./algoritmo_tres/include  $(INCLUDE_FLAGS) ./algoritmo_tres/src/alg3.c $(UTILS) -lm
 
 # Ejecutar Parte Tres Windows
 eptw:
