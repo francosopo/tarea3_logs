@@ -123,7 +123,7 @@ void test_esfuerzo(void){
 }
 
 void generate_stats(void){
-    int ITERACIONES = 100;
+    int ITERACIONES = 20;
     int START = 1<< 16 ;
     int MAX_SIZE = 1<< 26;
     int MAX_VALUE = INT_MAX;
@@ -133,7 +133,7 @@ void generate_stats(void){
 
     int index_pivot;
     for(int i = 0; i < ITERACIONES; i++){
-        epsilon[i] = alpha[i] = ((double)(i + 1)) / ITERACIONES;
+        epsilon[i] = alpha[i] = ((double)(i + 1)) / (2*ITERACIONES);
     }
 
     FILE *out= fopen("./alg3.csv", "w");
