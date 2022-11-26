@@ -10,7 +10,6 @@ int find_median_alg3(Mediana *arr, double epsilon, double alpha,double *prob_emp
     double mediana = getFromMedian(arr, 0);
     int index_pivot = 0;
     
-    printf("\n [!] Total iteraciones: %0.3f\n",total );
     int start = size/2;
     if(((start << 31) & -1) == 0){ //start es par
         start++;
@@ -141,7 +140,7 @@ void generate_stats(void){
     fprintf(out, "%s,%s,%s,%s,%s,%s\n", "epsilon", "alpha", "prob_empirica", "array_size","c", "time");
 
     for (int j = START; j < MAX_SIZE; j = j << 1){
-        printf("\n [!] j = %0.3f", log2(j));
+        printf("\n [!] j = %0.3f\n", log2(j));
         double mediana = ((double)rand()) /RAND_MAX * MAX_VALUE;
         Mediana *med = newMedian(j);
 
