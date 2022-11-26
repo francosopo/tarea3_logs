@@ -248,6 +248,12 @@ int getIndex(Mediana *med, double value);
 double promedios(Array *arr);
 
 /**
+ * my_max
+ * 
+ * Calcula el máximo entre dos valores
+*/
+double my_max(double a, double b);
+/**
  * testPartition
  * 
  * prueba la particion

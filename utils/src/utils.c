@@ -165,11 +165,15 @@ int getIndex(Mediana *med, double value){
     int size = getMedianSize(med);
     int ret = -1;
     for(int i= 0; i < size; i++){
-        if((getFromMedian(med, i) - value) < 0.00001){
+        if(fabs(getFromMedian(med, i) - value) < 0.00001){
             return i;
         }
     }
     return ret;
+}
+
+double my_max(double a, double b){
+    return a > b ? a: b;
 }
 void testPartition(void){
     int median_size = 100;
