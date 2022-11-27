@@ -161,6 +161,7 @@ void generate_stats(void){
                 double delta = end - begin / CLOCKS_PER_SEC;
                 if(c != -1){
                     fprintf(out,"%0.6f, %0.6f, %0.6f, %i, %i, %0.6f", epsilon[k],alpha[l],prob_empirica,j, c, delta);
+                    fflush(out);
                 }
             }
         }
