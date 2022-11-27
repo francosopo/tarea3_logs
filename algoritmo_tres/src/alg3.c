@@ -51,6 +51,7 @@ int find_median_alg3(Mediana *arr, double epsilon, double alpha,double *prob_emp
             *resp_index = index_pivot;
             //printf("\n [!] c: %i\n", c);
             *ret_c = c;
+            return 0;
         }
     }
     *resp_index = index_pivot;
@@ -160,7 +161,7 @@ void generate_stats(void){
                 clock_t end = clock();
                 double delta = end - begin / CLOCKS_PER_SEC;
                 if(c != -1){
-                    fprintf(out,"%0.6f, %0.6f, %0.6f, %i, %i, %0.6f", epsilon[k],alpha[l],prob_empirica,j, c, delta);
+                    fprintf(out,"%0.6f, %0.6f, %0.6f, %i, %i, %0.6f\n", epsilon[k],alpha[l],prob_empirica,j, c, delta);
                     fflush(out);
                 }
             }
