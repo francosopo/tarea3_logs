@@ -156,14 +156,22 @@ void generate_stats(void){
         for(int k = 0; k < ITERACIONES; k++){
             for(int l = 0; l < ITERACIONES; l++){
                 int c;
-                clock_t begin = clock();
-                find_median_alg3(med, epsilon[k], alpha[l],&prob_empirica, &index_pivot, &c);
-                clock_t end = clock();
-                double delta = ((double)end - begin) / CLOCKS_PER_SEC;
+                int EXPERIMENTOS = 50;
+                Array *proms = newArray(EXPERIMENTOS);
+                for (int v = 0; v < 50; v++){
+                    clock_t begin = clock();
+                    find_median_alg3(med, epsilon[k], alpha[l],&prob_empirica, &index_pivot, &c);
+                    clock_t end = clock();
+                    double delta = ((double)end - begin) / CLOCKS_PER_SEC;
+                    setToArray(proms,v,delta);
+                }
+                double promedio = promedios(proms);
                 if(c != -1){
-                    fprintf(out,"%0.6f, %0.6f, %0.6f, %i, %i, %0.6f\n", epsilon[k],alpha[l],prob_empirica,j, c, delta);
+                    fprintf(out,"%0.6f, %0.6f, %0.6f, %i, %i, %0.6f\n", epsilon[k],alpha[l],prob_empirica,j, c, promedio);
                     fflush(out);
                 }
+                destroyArray(proms);
+            
             }
         }
         destroyMedian(med);
