@@ -159,7 +159,7 @@ void generate_stats(void){
                 clock_t begin = clock();
                 find_median_alg3(med, epsilon[k], alpha[l],&prob_empirica, &index_pivot, &c);
                 clock_t end = clock();
-                double delta = end - begin / CLOCKS_PER_SEC;
+                double delta = ((double)end - begin) / CLOCKS_PER_SEC;
                 if(c != -1){
                     fprintf(out,"%0.6f, %0.6f, %0.6f, %i, %i, %0.6f\n", epsilon[k],alpha[l],prob_empirica,j, c, delta);
                     fflush(out);
