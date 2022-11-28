@@ -7,14 +7,14 @@ double middleIndexPivot(double *arr){
 //consigo c valores al azar del rango, ordeno el arreglo obtenido y saco el indice
 //de la mediana.
 int generate_random_pivot(Mediana *med, int c, int index_start, int index_end, int k){
-    double possible_pivots[c];
-
     int size= index_end-index_start+1;
+    Array *possible_pivots= newArray(c);
     for(int i =0; i<c;i++){
-        possible_pivots[i] = med->arr->arr[index_start+rand()%size];
+        setToArray(possible_pivots, i, med->arr->arr[index_start+rand()%size]);
     }
     quicksort(possible_pivots);
-    double pivot= middleIndexPivot(possible_pivots);
+    double pivot= middleIndexPivot(possible_pivots->arr);
+    destroyArray(possible_pivots);
     return getIndex(med,pivot);
 }
 
