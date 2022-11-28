@@ -1,15 +1,23 @@
 #include <alg2.h>
-
-
+//Get median debe asume que el arreglo es impar ya que el c utilizado debe ser impar
+double middleIndexPivot(double *arr){
+    int lenght= len(arr);
+    return arr[(lenght-1)/2];
+}
+//consigo c valores al azar del rango, ordeno el arreglo obtenido y saco el indice
+//de la mediana.
 int generate_random_pivot(Mediana *med, int c, int index_start, int index_end, int k){
     double possible_pivots[c];
+
     int size= index_end-index_start+1;
     for(int i =0; i<c;i++){
-        possible_pivots[i]= med->arr[index_start+rand()%size];
+        possible_pivots[i] = med->arr->arr[index_start+rand()%size];
     }
     quicksort(possible_pivots);
-
+    double pivot= middleIndexPivot(possible_pivots);
+    return getIndex(med,pivot);
 }
+
 //algoritmo para obtener 
 int find_median_alg2(Mediana *med,int c,int index_start, int index_end, int k){
     int size= index_end-index_start+1;
