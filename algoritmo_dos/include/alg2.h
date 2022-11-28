@@ -2,4 +2,4 @@
 /// En utils.h se define lo que se usará en todos los algoritmos.
 #include <utils.h>
 
-int find_median_alg2(Mediana *m);
+int find_median_alg2(Mediana *m,int c, int index_start, int index_end, int k);
