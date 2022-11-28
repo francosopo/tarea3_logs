@@ -8,7 +8,7 @@ int generate_random_pivot(Mediana *med, int c, int index_start, int index_end, i
         possible_pivots[i]= med->arr[index_start+rand()%size];
     }
     quicksort(possible_pivots);
-    
+
 }
 //algoritmo para obtener 
 int find_median_alg2(Mediana *med,int c,int index_start, int index_end, int k){
