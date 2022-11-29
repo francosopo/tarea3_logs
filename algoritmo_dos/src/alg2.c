@@ -10,8 +10,8 @@ int generate_random_pivot(Mediana *med, int c, int index_start, int index_end, i
     int size= index_end-index_start+1;
     Array *possible_pivots= newArray(c);
     for(int i =0; i<c;i++){
-        
-        setToArray(possible_pivots, i, med->arr->arr[index_start+rand()%size]);
+        double random = ((double) rand())/RAND_MAX * (index_end - index_start) + index_start;
+        setToArray(possible_pivots, i, med->arr->arr[(long long)random]);
     }
     quicksort(possible_pivots);
     double pivot= middleIndexPivot(possible_pivots->arr, c);
